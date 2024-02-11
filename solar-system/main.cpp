@@ -71,9 +71,13 @@ float g_previousTicks;
 GLuint g_earthTextureID;
 GLuint g_moonTextureID;
 bool g_earthMovingLeft = true;
+bool g_moonMovingAway = true;
+float g_earthCosInput = 0.0;
 float g_earthTranslateX = 0.0;
 float g_earthRotate = 0.0;
+float g_moonDistance = 4.0;
 float g_moonRotate = 0.0;
+float g_moonScale = 1.0;
 
 GLuint load_texture(const char* filepath) {
 	// load image file
@@ -154,28 +158,25 @@ void update() {
 	float deltaTime = ticks - g_previousTicks; // the delta time is the difference from the last frame
 	g_previousTicks = ticks;
 
-	// calculate new positions
-	if (abs(g_earthTranslateX) > 1.65) {
-		g_earthMovingLeft = !g_earthMovingLeft;
-		g_earthTranslateX *= 0.99f;
-	}
-	if (g_earthMovingLeft) {
-		g_earthTranslateX += 1.0f * deltaTime;
-	}
-	else {
-		g_earthTranslateX -= 1.0f * deltaTime;
-	}
+	// calculations for earth
+	g_earthCosInput += 1.2f * deltaTime;
+	g_earthTranslateX = cos(g_earthCosInput) * 2.0f;
+	
+	// calculations for moon
 	g_moonRotate += 30 * deltaTime;
+	g_moonScale = 1.0f - (sin(glm::radians(g_moonRotate)) * 0.3f);
+	g_moonDistance = 3.0f + (cos(glm::radians(2 * g_moonRotate)) * 0.4f);
 
 	// reset model matrices
 	g_modelMatrixEarth = glm::mat4(1.0f);
 	g_modelMatrixMoon = glm::mat4(1.0f);
 
-	// re-apply transformation
+	// re-apply transformations
 	g_modelMatrixEarth = glm::translate(g_modelMatrixEarth, glm::vec3(g_earthTranslateX, 0.0f, 0.0f));
 	g_modelMatrixMoon = glm::translate(g_modelMatrixEarth, glm::vec3(0.0f, 0.0f, 0.0f));
 	g_modelMatrixMoon = glm::rotate(g_modelMatrixMoon, glm::radians(g_moonRotate), glm::vec3(0.0f, 0.0f, 1.0f));
-	g_modelMatrixMoon = glm::translate(g_modelMatrixMoon, glm::vec3(3.2f, 0.0f, 0.0f));
+	g_modelMatrixMoon = glm::translate(g_modelMatrixMoon, glm::vec3(g_moonDistance, 0.0f, 0.0f));
+	g_modelMatrixMoon = glm::scale(g_modelMatrixMoon, glm::vec3(g_moonScale, g_moonScale, 0.0f));
 	g_modelMatrixEarth = glm::scale(g_modelMatrixEarth, glm::vec3(1.65f, 1.65f, 0.0f));
 }
 
