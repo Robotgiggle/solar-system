@@ -25,27 +25,27 @@
 
 // window size
 const int WINDOW_WIDTH = 640,
-WINDOW_HEIGHT = 480;
+		  WINDOW_HEIGHT = 480;
 
 // background color
 const float BG_RED = 0.0f,
-BG_GREEN = 0.067f,
-BG_BLUE = 0.169f,
-BG_OPACITY = 1.0f;
+			BG_GREEN = 0.067f,
+			BG_BLUE = 0.169f,
+			BG_OPACITY = 1.0f;
 
 // camera position and size
 const int VIEWPORT_X = 0,
-VIEWPORT_Y = 0,
-VIEWPORT_WIDTH = WINDOW_WIDTH,
-VIEWPORT_HEIGHT = WINDOW_HEIGHT;
+		  VIEWPORT_Y = 0,
+		  VIEWPORT_WIDTH = WINDOW_WIDTH,
+		  VIEWPORT_HEIGHT = WINDOW_HEIGHT;
 
 // paths for shaders
 const char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
-F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
+		   F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
 // paths for object sprites
 const char EARTH_SPRITE_PATH[] = "assets/earth.png",
-MOON_SPRITE_PATH[] = "assets/moon.png";
+		   MOON_SPRITE_PATH[] = "assets/moon.png";
 
 // const for deltaTime calc
 const float MILLISECONDS_IN_SECOND = 1000.0;
@@ -58,9 +58,9 @@ const GLint TEXTURE_BORDER = 0; // this value MUST be zero
 // shader and associated matrices
 ShaderProgram g_shaderProgram;
 glm::mat4 g_viewMatrix,
-g_modelMatrixEarth,
-g_modelMatrixMoon,
-g_projectionMatrix;
+		  g_modelMatrixEarth,
+		  g_modelMatrixMoon,
+		  g_projectionMatrix;
 
 // core globals
 SDL_Window* g_displayWindow;
